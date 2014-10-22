@@ -1,0 +1,8 @@
+pole tekstowe, obok przycisk "Dodaj", pod spodem lista (początkowo pusta)
+po wpisaniu czegoś do pola tekstowego i kliknięciu przycisku, treść z pola tekstowego pojawia się jako element listy.
+
+poszczególne elementy listy można zaznaczyć (jako "active" czy jakoś tak) - tylko jeden ma być zaznaczony
+
+
+opcjonalnie: css, żeby dało się na to paczeć
+opcjonalnie i ekstremalnie: obok elementu listy, po kliknięciu na tenże ukazuje się przycisk "usuń", który usuwa element z listy 
