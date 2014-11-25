@@ -1,0 +1,69 @@
+UAM.InputView = function(elt) {
+	UAM.EventEmitter.call(this);
+	this.buttonAdd = document.getElementById('add_button');
+	this.textInput = document.getElementById('text_input');
+	var view = this;
+	buttonAdd.addEventListener('click', function(){
+		if (textInput.value != '') {
+			view.emit('clickButton', textInput.value);
+			buttonAdd.textContent = 'wie';
+		}
+	});
+}
+
+UAM.utils.inherits(UAM.EventEmitter, UAM.InputView);
+
+UAM.InputView.prototype.clean = function() {
+	//var textInput = document.getElementById('text_input');
+	this.textInput.textContent = '';
+}
+
+
+
+UAM.ListView = function(elt) {
+	UAM.EventEmitter.call(this);
+	this.list = document.getElementById('dynamic_list');
+}
+UAM.utils.inherits(UAM.EventEmitter, UAM.ListView);
+
+UAM.ListView.prototype.addNewElement = function(elementText) {
+	var listElement = document.createElement('li');
+	listElement.textContent = elementText;
+	listElement.addEventListener('click', function(){
+		view.emit('clickList', listElement.id);
+	});
+	this.list.appendChild(listElement);
+}
+
+UAM.ListView.prototype.updateList = function(id, active) {
+	if (active == true) {
+		this.list.getElementById(id).backgroundColor = '#D7E6E5';
+	}
+	else {
+		this.list.getElementById(id).backgroundColor = '#D7CBB5';
+	}
+}
+
+UAM.FooterView = function(elt) {
+	UAM.EventEmitter.call(this);
+	this.footer = document.getElementById('active_footer');
+}
+
+UAM.FooterView.prototype.update = function(activeElements) {
+	if (activeElements.length == 0) {
+		this.footer.textContent = 'No active elements';
+	}
+	else {
+		this.footer.textContent = 'Active elements: ';
+		for (var i=0; i<activeElements.length; i++0) {
+			this.footer.textContent = this.footer.textContent + ' ' + activeElements[i];
+		}
+	}
+	
+}
+
+
+	
+}
+
+

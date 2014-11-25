@@ -1,0 +1,13 @@
+window.addEventListener('DOMContentLoaded', function () {
+	//After the page structure is loaded
+
+	var store = new UAM.Store();
+
+	var inputView = new UAM.InputView(document.querySelector('text_input'));
+	var listView = new UAM.ListView(document.querySelector('dynamic_list'));
+	var footerView = new UAM.FooterView(document.querySelector('footer'));
+
+	new InputCtrl(inputView, store);
+	new ListCtrl(listView, store);
+	new FooterCtrl(footerView, store);
+});

@@ -1,0 +1,35 @@
+UAM.Store = function () {
+	UAM.EventEmitter.call(this);
+	this.data  = [];
+	this.activeData = [];
+};
+
+UAM.utils.inherits(UAM.EventEmitter, UAM.Store);
+
+//adding elements to the list
+UAM.Store.prototype.add = function (data) {
+	this.data.push(element);
+	this.activeData.push(false);
+	this.emit('listAddELement', element);
+}
+
+//updating active elements of the list
+UAM.Store.prototype.update = function (id, data) {
+	var active = false;
+	if (activeElements[id] == false) {
+		activeElements[id] = true;
+		active = true;
+	}
+	else {
+		activeElements[id] = false;
+	}
+	
+	var temp = [];
+	for (var i=0; i<this.data.length; i++) {
+		if (activeElements[i] == true) {
+			temp.push(data[i]);
+		}
+	}
+	this.emit('footerUpdate', active, temp);
+	this.emit('listUpdate', id, active);
+}
