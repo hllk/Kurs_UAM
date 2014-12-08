@@ -10,5 +10,20 @@ window.addEventListener('DOMContentLoaded', function () {
 	new UAM.InputCtrl(inputView, store);
 	new UAM.ListCtrl(listView, store);
 	new UAM.FooterCtrl(footerView, store);
-    
+	
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() {
+		if (httpRequest.readyState !== 4) {
+			return;
+		}
+		if (httpRequest.status !== 200) {
+			throw new Error('Request failed');
+		}
+		var data = JSON.parse(httpRequest.responseText);
+		data.forEach(function(element) {
+			store.add(element.value);
+		});
+	}
+	httpRequest.open('GET', '/api/todos');
+	httpRequest.send();	
 });
