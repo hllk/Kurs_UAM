@@ -1,35 +1,60 @@
 UAM.Store = function () {
+
 	UAM.EventEmitter.call(this);
 	this.data  = [];
-	this.activeData = [];
+	this.activeElements = [];
+    
 };
 
 UAM.utils.inherits(UAM.EventEmitter, UAM.Store);
 
 //adding elements to the list
 UAM.Store.prototype.add = function (data) {
-	this.data.push(element);
-	this.activeData.push(false);
-	this.emit('listAddELement', element);
-}
+	this.data.push(data);
+	this.activeElements.push(false);
+	this.emit("listAddElement", data);
+};
 
 //updating active elements of the list
 UAM.Store.prototype.update = function (id, data) {
 	var active = false;
-	if (activeElements[id] == false) {
-		activeElements[id] = true;
+	if (this.activeElements[id] == false) {
+		this.activeElements[id] = true;
 		active = true;
 	}
 	else {
-		activeElements[id] = false;
+		this.activeElements[id] = false;
 	}
 	
-	var temp = [];
+	var elts = [];
 	for (var i=0; i<this.data.length; i++) {
-		if (activeElements[i] == true) {
-			temp.push(data[i]);
+		if (this.activeElements[i] == true) {
+			elts.push(this.data[i]);
 		}
 	}
-	this.emit('footerUpdate', active, temp);
+	this.emit('footerUpdate', elts);
 	this.emit('listUpdate', id, active);
-}
+    
+};
+
+UAM.Store.prototype.save = function() {
+	var elements = [];
+	for (var i=0; i<this.data.length; i++) {
+		elements.push({id: i, value: data[i]});
+	}
+	
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() {
+		if (httpRequest.readyState !== 4) {
+			return;
+		}
+		if (httpRequest.status !== 200) {
+			alert('Request failed');
+			return;
+		}
+		console.log(httpRequest.responseText);
+	};
+	httpRequest.open('POST', '/api/todos');
+	httpRequest.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+	httpRequest.send(JSON.stringify(elements));
+};

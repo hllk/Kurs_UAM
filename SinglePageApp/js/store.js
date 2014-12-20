@@ -36,3 +36,25 @@ UAM.Store.prototype.update = function (id, data) {
 	this.emit('listUpdate', id, active);
     
 };
+
+UAM.Store.prototype.save = function() {
+	var elements = [];
+	for (var i=0; i<this.data.length; i++) {
+		elements.push({id: i, value: this.data[i]});
+	}
+	
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() {
+		if (httpRequest.readyState !== 4) {
+			return;
+		}
+		if (httpRequest.status !== 200) {
+			alert('Request failed');
+			return;
+		}
+		console.log(httpRequest.responseText);
+	};
+	httpRequest.open('POST', '/api/todos');
+	httpRequest.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+	httpRequest.send(JSON.stringify(elements));
+};

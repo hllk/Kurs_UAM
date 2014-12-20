@@ -1,6 +1,7 @@
 UAM.InputCtrl = function(view, store) {
 	view.on('clickButton', function(elementText) {
 		store.add(elementText);
+		store.save();
 		view.clean();
     });
 };
